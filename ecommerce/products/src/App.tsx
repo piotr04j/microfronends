@@ -1,8 +1,8 @@
-import './App.scss'
+import styles from './App.scss'
 
 const App: () => JSX.Element = () => {
   return (
-        <div>
+        <div className={styles.test}>
           Hello world!
         </div>
   )

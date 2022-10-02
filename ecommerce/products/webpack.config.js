@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const isDevelopment = process.env.NODE_ENV === 'development'
 
 module.exports = {
-  mode: 'development',
+  mode: isDevelopment ? 'development' : 'production',
   entry: './src/index.tsx',
   devtool: isDevelopment ? 'source-map' : false,
   devServer: {
@@ -24,8 +24,19 @@ module.exports = {
         test: /\.s[ac]ss$/i,
         use: [
           "style-loader",
-          "css-loader",
-          "sass-loader"
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: isDevelopment,
+              modules: true
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: isDevelopment
+            },
+          },
         ],
       },
     ],
