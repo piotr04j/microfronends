@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 const isDevelopment = process.env.NODE_ENV === 'development'
 
 module.exports = {
@@ -31,5 +32,16 @@ module.exports = {
       template: './public/index.html'
     }),
     new CleanWebpackPlugin(),
-  ]
+    new ModuleFederationPlugin({
+      name: 'container',
+      filename: 'remoteEntry.js',
+      remotes: {
+        products: 'products@http://localhost:8081/remoteEntry.js',
+        cart: 'cart@http://localhost:8082/remoteEntry.js'
+      }
+    })
+  ],
+  performance: {
+    hints: false
+  },
 }

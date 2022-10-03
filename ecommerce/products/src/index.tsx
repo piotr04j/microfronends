@@ -10,3 +10,6 @@ root.render(
       <App />
     </React.StrictMode>
 )
+
+
+export const foo = 12

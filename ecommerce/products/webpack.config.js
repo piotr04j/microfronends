@@ -1,7 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 const isDevelopment = process.env.NODE_ENV === 'development'
 
 module.exports = {
@@ -56,6 +57,16 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].[hash].css',
       chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
+    }),
+    new ModuleFederationPlugin({
+      name: 'products',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './ProductsIndex': './src/index'
+      }
     })
-  ]
+  ],
+  performance: {
+    hints: false
+  },
 }
