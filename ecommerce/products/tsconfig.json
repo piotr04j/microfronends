@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "outDir": "./dist/",
-    "module": "es6",
+    "module": "esnext",
     "target": "es5",
     "jsx": "react-jsx",
     "allowJs": true,

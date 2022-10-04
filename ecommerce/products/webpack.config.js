@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 const isDevelopment = process.env.NODE_ENV === 'development'
+const deps = require('./package.json').dependencies
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
@@ -62,8 +63,22 @@ module.exports = {
       name: 'products',
       filename: 'remoteEntry.js',
       exposes: {
-        './ProductsIndex': './src/index'
-      }
+        './ProductsIndex': './src/bootstrap'
+      },
+      shared: {
+        'react': {
+          singleton: true,
+          requiredVersion: deps['react'],
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: deps['react-dom'],
+        },
+        'faker': {
+          singleton: true,
+          requiredVersion: deps['faker'],
+        },
+      },
     })
   ],
   performance: {
