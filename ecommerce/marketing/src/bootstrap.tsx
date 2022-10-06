@@ -2,8 +2,7 @@ import * as React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 
-export const mountProductsApp = (el: HTMLElement | null) => {
-    console.log(el)
+export const mountMarketingApp = (el: HTMLElement | null) => {
     if (el === null) throw new Error('Failed to find the root element')
     const root = createRoot(el)
     root.render(
@@ -13,9 +12,7 @@ export const mountProductsApp = (el: HTMLElement | null) => {
     )
 }
 
-const rootElement = document.getElementById('dev-products')
+const rootElement = document.getElementById('dev-marketing')
 if(process.env.NODE_ENV === 'development' && rootElement) {
-    mountProductsApp(rootElement)
+    mountMarketingApp(rootElement)
 }
-
-

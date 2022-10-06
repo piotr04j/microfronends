@@ -4,14 +4,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 const isDevelopment = process.env.NODE_ENV === 'development'
-const deps = require('./package.json').dependencies
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   entry: './src/index.tsx',
   devtool: isDevelopment ? 'source-map' : false,
   devServer: {
-    port: 8082,
+    port: 8081,
   },
   module: {
     rules: [
@@ -60,24 +59,10 @@ module.exports = {
       chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
     }),
     new ModuleFederationPlugin({
-      name: 'cart',
+      name: 'auth',
       filename: 'remoteEntry.js',
       exposes: {
-        './CartIndex': './src/bootstrap'
-      },
-      shared: {
-        'react': {
-          singleton: true,
-          requiredVersion: deps['react'],
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
-        },
-        'faker': {
-          singleton: true,
-          requiredVersion: deps['faker'],
-        },
+        './AuthIndex': './src/bootstrap'
       },
     })
   ],

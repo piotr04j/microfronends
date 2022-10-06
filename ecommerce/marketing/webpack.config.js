@@ -11,7 +11,7 @@ module.exports = {
   entry: './src/index.tsx',
   devtool: isDevelopment ? 'source-map' : false,
   devServer: {
-    port: 8081,
+    port: 8082,
   },
   module: {
     rules: [
@@ -60,24 +60,10 @@ module.exports = {
       chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
     }),
     new ModuleFederationPlugin({
-      name: 'products',
+      name: 'marketing',
       filename: 'remoteEntry.js',
       exposes: {
-        './ProductsIndex': './src/bootstrap'
-      },
-      shared: {
-        'react': {
-          singleton: true,
-          requiredVersion: deps['react'],
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
-        },
-        'faker': {
-          singleton: true,
-          requiredVersion: deps['faker'],
-        },
+        './MarketingIndex': './src/bootstrap'
       },
     })
   ],
