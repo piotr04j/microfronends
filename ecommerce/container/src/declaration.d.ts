@@ -1,12 +1,12 @@
-declare module 'marketing/MarketingIndex' {
+declare module 'marketing/MarketingApp' {
     const mountMarketingApp:  (el: HTMLElement | null) => void
 }
 
-declare module 'auth/AuthIndex' {
+declare module 'auth/AuthApp' {
     const mountAuthApp:  (el: HTMLElement | null) => void
 }
 
-declare module 'dashboard/DashboardIndex' {
+declare module 'dashboard/DashboardApp' {
     const mountDashboardApp:  (el: HTMLElement | null) => void
 }
 
