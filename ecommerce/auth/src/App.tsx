@@ -4,7 +4,7 @@ const App: () => JSX.Element = () => {
 
     return (
         <div className={styles['test-cart']}>
-            Hello world! From Marketing
+            Hello world! From Auth
         </div>
     )
 }
