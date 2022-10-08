@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
 const isDevelopment = process.env.NODE_ENV === 'development'
-const deps = require('./package.json').dependencies
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
@@ -12,6 +11,7 @@ module.exports = {
   devtool: isDevelopment ? 'source-map' : false,
   devServer: {
     port: 8082,
+    historyApiFallback: true
   },
   module: {
     rules: [
@@ -47,7 +47,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js', 'scss'],
   },
   output: {
-    filename: '[hash].bundle.js',
+    filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins:[
@@ -63,7 +63,7 @@ module.exports = {
       name: 'marketing',
       filename: 'remoteEntry.js',
       exposes: {
-        './MarketingIndex': './src/bootstrap'
+        './MarketingApp': './src/bootstrap'
       },
     })
   ],
