@@ -86,9 +86,9 @@ const Landing: () => JSX.Element = () => {
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link to="/pricing">
+                                    <Link to="/">
                                         <Button variant="outlined" color="primary">
-                                            Pricing
+                                            Landing
                                         </Button>
                                     </Link>
                                 </Grid>
