@@ -1,8 +1,8 @@
 declare module 'marketing/MarketingApp' {
-  type onNavigate = {
+  interface onNavigate {
     onNavigate: (location: Location) => void
   }
-  const mountMarketingApp: (el: HTMLElement | null, {}: onNavigate) => { onParentNavigate: (nextPathname?: string) => void}
+  const mountMarketingApp: (el: HTMLElement | null, {}: onNavigate) => { onParentNavigate: (nextPathname?: string) => void }
 }
 
 declare module 'auth/AuthApp' {

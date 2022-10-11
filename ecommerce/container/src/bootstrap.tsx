@@ -1,8 +1,7 @@
 import * as React from 'react'
 // import { mountAuthApp } from 'auth/AuthIndex'
-import App from './App';
-import { createRoot } from 'react-dom/client';
-
+import App from './App'
+import { createRoot } from 'react-dom/client'
 
 // const authAppRoot = document.getElementById('auth-app')
 // mountAuthApp(authAppRoot)
@@ -16,6 +15,5 @@ root.render(
         <App />
     </React.StrictMode>
 )
-
 
 export default {}
