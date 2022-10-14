@@ -1,11 +1,27 @@
-import styles from './App.scss'
+import { StylesProvider, createGenerateClassName } from '@material-ui/core'
+import { Router, Route, Routes, } from 'react-router-dom';
+import { MemoryHistory } from 'history';
+import * as React from 'react';
+import { typeCreateBrowserHistory } from './bootstrap';
+import SignIn from './components/Signin';
+import SignUp from './components/Signup';
 
-const App: () => JSX.Element = () => {
+const generateGenerateClassName = createGenerateClassName({
+    productionPrefix: 'auth'
+})
 
+const App: React.FC<{history: MemoryHistory | ReturnType<typeCreateBrowserHistory>}> = ({history}) => {
     return (
-        <div className={styles['test-cart']}>
-            Hello world! From Auth
-        </div>
+        <>
+            <StylesProvider generateClassName={generateGenerateClassName}>
+                <Router navigator={history} location={history.location}>
+                    <Routes>
+                        <Route path={'/auth/signin'} element={<SignIn onSignIn={() => {}} />} />
+                        <Route path={'/auth/signup'} element={<SignUp onSignIn={() => {}} />} />
+                    </Routes>
+                </Router>
+            </StylesProvider>
+        </>
     )
 }
 

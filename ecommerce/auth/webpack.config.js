@@ -11,6 +11,11 @@ module.exports = {
   devtool: isDevelopment ? 'source-map' : false,
   devServer: {
     port: 8081,
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/$/, to: '/index.html' },
+      ]
+    }
   },
   module: {
     rules: [
@@ -48,6 +53,8 @@ module.exports = {
   output: {
     filename: '[hash].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    //add handling in production env
+    publicPath: 'http://localhost:8081/'
   },
   plugins:[
     new HtmlWebpackPlugin({
@@ -62,9 +69,9 @@ module.exports = {
       name: 'auth',
       filename: 'remoteEntry.js',
       exposes: {
-        './AuthIndex': './src/bootstrap'
+        './AuthApp': './src/bootstrap'
       },
-    })
+    }),
   ],
   performance: {
     hints: false
