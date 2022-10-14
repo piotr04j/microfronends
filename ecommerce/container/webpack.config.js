@@ -13,6 +13,7 @@ module.exports = {
   devtool: isDevelopment ? 'source-map' : false,
   devServer: {
     port: 8080,
+    historyApiFallback: true
   },
   module: {
     rules: [
@@ -31,6 +32,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: 'http://localhost:8080/'
   },
   plugins:[
     new HtmlWebpackPlugin({
