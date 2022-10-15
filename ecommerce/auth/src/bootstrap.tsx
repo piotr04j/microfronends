@@ -4,33 +4,43 @@ import {
     createMemoryHistory,
     MemoryHistory,
     LocationListener,
-    createBrowserHistory, InitialEntry,
+    createBrowserHistory,
+    InitialEntry,
 } from 'history';
 import App from './App'
 
 export type typeCreateBrowserHistory = typeof createBrowserHistory
 
-export const mountAuthApp = (el: HTMLElement | null, navigationObject: {onNavigate?: LocationListener, defaultHistory?: typeCreateBrowserHistory,  initialPath?: InitialEntry[] }) => {
+export const mountAuthApp = (el: HTMLElement | null, navigationObject?: {onNavigate?: LocationListener, defaultHistory?: typeCreateBrowserHistory,  initialPath?: InitialEntry[] }) => {
     if (el === null) throw new Error('Failed to find the root element')
     const root = createRoot(el)
-    const history: MemoryHistory | ReturnType<typeCreateBrowserHistory> = navigationObject
-        && navigationObject.defaultHistory && navigationObject.defaultHistory()
-        || createMemoryHistory({ initialEntries: navigationObject.initialPath })
 
-    if (navigationObject && navigationObject.onNavigate) {
-        history.listen(navigationObject.onNavigate);
-    }
+    if(!navigationObject) {
+        root.render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>
+        )
+    } else {
+        const history: MemoryHistory | ReturnType<typeCreateBrowserHistory> = navigationObject
+            && navigationObject.defaultHistory && navigationObject.defaultHistory()
+            || createMemoryHistory({ initialEntries: navigationObject.initialPath })
 
-    root.render(
-        <React.StrictMode>
-            <App  history={history}/>
-        </React.StrictMode>
-    )
+        if (navigationObject && navigationObject.onNavigate) {
+            history.listen(navigationObject.onNavigate);
+        }
 
-    return {
-        onParentNavigate: (nextPathname: string) => {
-            if (history.location.pathname !== nextPathname) {
-                history.push(nextPathname)
+        root.render(
+            <React.StrictMode>
+                <App  history={history}/>
+            </React.StrictMode>
+        )
+
+        return {
+            onParentNavigate: (nextPathname: string) => {
+                if (history.location.pathname !== nextPathname) {
+                    history.push(nextPathname)
+                }
             }
         }
     }
@@ -39,9 +49,6 @@ export const mountAuthApp = (el: HTMLElement | null, navigationObject: {onNaviga
 const rootElement = document.getElementById('dev-auth')
 if (process.env.NODE_ENV === 'development' && (rootElement != null)) {
     mountAuthApp(
-        rootElement,
-        {
-            defaultHistory: createBrowserHistory
-        }
+        rootElement
     )
 }
