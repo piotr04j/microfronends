@@ -4,16 +4,18 @@ import {
   createMemoryHistory,
   MemoryHistory,
   LocationListener,
-  createBrowserHistory,
-} from 'history'
+  createBrowserHistory, InitialEntry,
+} from 'history';
 import App from './App'
 
 export type typeCreateBrowserHistory = typeof createBrowserHistory
 
-export const mountMarketingApp = (el: HTMLElement | null, navigationObject: {onNavigate?: LocationListener, defaultHistory?: typeCreateBrowserHistory }) => {
+export const mountMarketingApp = (el: HTMLElement | null, navigationObject: {onNavigate?: LocationListener, defaultHistory?: typeCreateBrowserHistory,  initialPath?: InitialEntry[] }) => {
   if (el === null) throw new Error('Failed to find the root element')
   const root = createRoot(el)
-  const history: MemoryHistory | ReturnType<typeCreateBrowserHistory> = navigationObject && navigationObject.defaultHistory && navigationObject.defaultHistory() || createMemoryHistory()
+  const history: MemoryHistory | ReturnType<typeCreateBrowserHistory> = navigationObject
+      && navigationObject.defaultHistory && navigationObject.defaultHistory()
+      || createMemoryHistory({ initialEntries: navigationObject.initialPath })
 
   if (navigationObject && navigationObject.onNavigate) {
     history.listen(navigationObject.onNavigate);
